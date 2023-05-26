@@ -1,20 +1,23 @@
-package main
+package chapter1
 
 import (
 	"bufio"
+	"flag"
 	"fmt"
+	"go-in-action/src"
 	"io"
 	"io/ioutil"
 	"log"
 	"net/http"
 	"os"
+	"strings"
 	"time"
 )
 
-func main() {
+func Main() {
 	fmt.Println("hello world")
 	fmt.Println("=============> terminal <=============")
-	terminal()
+	//terminal()
 	fmt.Println("=============> forLoop <=============")
 	forLoop()
 	fmt.Println("=============> duplicate <=============")
@@ -27,11 +30,19 @@ func main() {
 	declaration()
 	fmt.Println("=============> pointer <=============")
 	pointer()
+	fmt.Println("=============> flagTest <=============")
+	flagTest()
+	fmt.Println("=============> newTest <=============")
+	newTest()
+	fmt.Println("=============> assign <=============")
+	assign()
+	fmt.Println("=============> packageTest <=============")
+	packageTest()
 }
 
 /**
   读取terminal参数，自动将入参转为slice（动态容量的有序数组）
-  go build main.go
+  go build chapter1.go
   ./main Mon Tue Wed Thu Fri Sat Sun
 */
 func terminal() {
@@ -159,4 +170,61 @@ func pointer() {
 func incr(p *int) int {
 	*p++ // 递增p所指向的值,p本身不变(p是一个指针)
 	return *p
+}
+
+func flagTest() {
+	var str string
+	flag.StringVar(&str, "s", "", "将空格替换为指定分隔符") // 传入变量的指针,不需要返回值就能改变str的值
+	flag.Parse()                                 // 解析用户传入的命令行参数
+	if str != "" {
+		fmt.Println(strings.Join(flag.Args(), str)) // 参数是 ./main -s / a bc 输出 a/bc
+	} else {
+		fmt.Println(flag.Args())
+	}
+}
+
+func newTest() {
+	a := new(int)
+	b := new(int)
+	fmt.Println(a)      // 指针的地址
+	fmt.Println(a == b) // 每new一次每次的地址都不同
+	fmt.Println(*a)     // 初始为0
+	p := new(Person)
+	fmt.Println(p.Age) // 会被初始化为零值
+}
+
+type Person struct {
+	Name string
+	Age  int
+}
+
+func assign() {
+	var x int
+	x = 1 // 有名称的变量
+	fmt.Printf("x: %d\n", x)
+
+	y := &x
+	*y = 2 // 通过指针间接赋值
+	fmt.Printf("*y: %d\n", *y)
+
+	p := new(Person)
+	p.Name = "lucy" // 结构体成员
+	fmt.Printf("name: %s\n", p.Name)
+
+	s := []int{1, 2, 3} // 数组或slice或map的元素
+	fmt.Printf("slice: %d\n", s[1])
+
+	c := 1
+	c++
+	c--
+	fmt.Printf("c: %d\n", c)
+
+	a := 0
+	b := 1
+	a, b, c = b, a, a+b // 多重赋值,即一次性赋值多个变量,并且变量支持右侧表达式推演
+	fmt.Printf("a: %d, b: %d, c: %d\n", a, b, c)
+}
+
+func packageTest() {
+	src.Test()
 }

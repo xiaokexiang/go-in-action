@@ -277,7 +277,6 @@ func structTest() {
 	fmt.Printf("*p6 == *p7? %t\n", *p6 == *p7) // true 成员字面量相同
 
 	Sort([]int{5, 2, 3, 4, 1, 6, 7, 8})
-
 }
 
 type PersonNested struct {

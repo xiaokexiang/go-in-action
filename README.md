@@ -5,4 +5,5 @@
 ## <a href="./chapter2/README.md">2. 基本类型</a>
 ## <a href="./chapter3/README.md">3. 聚合类型</a>
 ## <a href="./chapter4/README.md">4. 函数</a>
+## <a href="./chapter5/README.md">5. 方法</a>
 

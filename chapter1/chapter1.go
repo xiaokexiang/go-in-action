@@ -4,7 +4,6 @@ import (
 	"bufio"
 	"flag"
 	"fmt"
-	"go-in-action/src"
 	"io"
 	"io/ioutil"
 	"log"
@@ -36,14 +35,14 @@ func Main() {
 	newTest()
 	fmt.Println("=============> assign <=============")
 	assign()
-	fmt.Println("=============> packageTest <=============")
-	packageTest()
 }
 
-/**
-  读取terminal参数，自动将入参转为slice（动态容量的有序数组）
-  go build chapter1.go
-  ./main Mon Tue Wed Thu Fri Sat Sun
+/*
+*
+
+	读取terminal参数，自动将入参转为slice（动态容量的有序数组）
+	go build chapter1.go
+	./main Mon Tue Wed Thu Fri Sat Sun
 */
 func terminal() {
 	fmt.Println(os.Args[0])   // 第一位为命令本身: ./main
@@ -51,7 +50,8 @@ func terminal() {
 	fmt.Println(os.Args[1:])  // 读取命令行第一个之后的所有参数
 }
 
-/**
+/*
+*
 for initialization; condition; post {
 }
 tips:
@@ -223,8 +223,4 @@ func assign() {
 	b := 1
 	a, b, c = b, a, a+b // 多重赋值,即一次性赋值多个变量,并且变量支持右侧表达式推演
 	fmt.Printf("a: %d, b: %d, c: %d\n", a, b, c)
-}
-
-func packageTest() {
-	src.Test()
 }

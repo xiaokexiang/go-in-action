@@ -1,9 +1,9 @@
 package main
 
 import (
-	"go-in-action/chapter1"
+	"go-in-action/chapter10"
 )
 
 func main() {
-	chapter1.Main()
+	chapter10.Main()
 }

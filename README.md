@@ -8,5 +8,6 @@
 ## <a href="./chapter5/README.md">4. 方法</a>
 ## <a href="./chapter6/README.md">5. 接口</a>
 ## <a href="./chapter7/README.md">6. goroutine和channel</a>
-## <a href="./chapter7/README.md">7. 并发和共享变量</a>
+## <a href="./chapter8/README.md">7. 并发和共享变量</a>
+## <a href="./chapter10/README.md">8. 反射</a>
 

@@ -3,7 +3,8 @@ import (
 	"fmt"
 	pkg1 "go-in-action-2025/package1" // 给包设置别名
 	pkg2 "go-in-action-2025/package2"
-	_ "go-in-action-2025/package3" // 不使用包中的方法,只使用init
+	_ "go-in-action-2025/package3" // 不使用包中的方法,只使用init\
+	. "go-in-action-2025/package4" // 导入包下所有的公有方法,不推荐
 )
 
 func main() {
@@ -11,7 +12,51 @@ func main() {
 	//export()
 	//constant()
 	//baseFunction()
-	importInit()
+	//importInit()
+	pointer()
+}
+
+/*
+java和go的基本数据类型都是`值复制`传递
+特性	        Java 引用类型	            Go 指针类型
+传递内容	    对象引用的副本（指针的副本）	指针的副本（地址的副本）
+修改对象属性	✅ 影响原始对象	        ✅ 影响原始对象
+重新赋值引用	❌ 不影响原引用	         ❌ 不影响原指针
+底层本质	    仍是值传递（传递引用副本）	仍是值传递（传递地址副本）
+
+&: 对变量取址
+*: 对指针取值
+*/
+func pointer() {
+	a := 1
+	b := 1
+	changeValue(a)
+	fmt.Println("a= ", a)
+	changeValuePointer(&b)
+	fmt.Println("b= ", b)
+
+	fmt.Println("before -> a,b= ", a, b)
+	swap(&a, &b)
+	fmt.Println("before -> a,b= ", a, b)
+
+	// 二级指针...N级指针
+	var c *int = &a
+	var d **int = &c
+	fmt.Println("c,d= ", c, d)
+}
+
+func changeValuePointer(p *int) {
+	*p = 10 // *p表示p指向的地址 p表示自己在内存中的值
+}
+
+func changeValue(p int) {
+	p = 10
+}
+
+func swap(a, b *int) {
+	tmp := *a
+	*a = *b
+	*b = tmp
 }
 
 /*
@@ -34,6 +79,7 @@ exit                      init()
 func importInit() {
 	pkg1.Echo()
 	pkg2.Echo()
+	Echo() // 不需要.的方式调用
 }
 
 func init() {

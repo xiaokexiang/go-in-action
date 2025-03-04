@@ -13,7 +13,104 @@ func main() {
 	//constant()
 	//baseFunction()
 	//importInit()
-	pointer()
+	//pointer()
+	//deferFunc()
+	arrOrSliceFunc()
+}
+func arrOrSliceFunc() {
+	arrFunc()
+	mySlice := []int{1, 2, 3}
+	sliceFunc(mySlice)
+	fmt.Println("--------------------------->")
+	for _, v := range mySlice {
+		fmt.Println("v: ", v)
+	}
+}
+
+func arrFunc() {
+	var arr [3]int
+	arr2 := [3]int{1, 2, 3}
+	fmt.Printf("arr type: %T\n", arr) // [3]int
+	for i := 0; i < len(arr); i++ {
+		fmt.Println("i: ", arr[i])
+	}
+	for i := 0; i < len(arr2); i++ {
+		fmt.Println("i: ", arr2[i])
+	}
+	for i, v := range arr2 {
+		fmt.Println("index: value: ", i, v)
+	}
+}
+
+/*
+1. slice又称动态数组[]int,相比数组容量不固定,数组创建时需要指定容量.
+2. slice作为参数传递时, slice是引用传递而数组是值传递
+3. make([]int, 3, 5) 开辟3个空间，slice的cap是5，size是3，当数量超过cap，会再次扩容一块区域，大小为5（开辟的地址不一定连续）
+4. 如果不指定cap，默认等于size
+*/
+func sliceFunc(mySlice []int) {
+	for _, v := range mySlice {
+		fmt.Println("v: ", v)
+	}
+	mySlice[0] = 100 // slice切片会被修改
+	fmt.Println("--------------------------->")
+	var slice1 []int         // 默认不分配空间
+	slice2 := make([]int, 3) // 开辟空间大小为3,默认值为0
+	if slice1 == nil {
+		fmt.Println("slice是一个空切片")
+	} else {
+		fmt.Println("slice是有空间的")
+	}
+
+	if slice2 == nil {
+		fmt.Println("slice是一个空切片")
+	} else {
+		fmt.Println("slice是有空间的")
+	}
+	fmt.Println("--------------------------->")
+	slice3 := make([]int, 2, 4)
+	fmt.Printf("size: %d, cap: %d, slice: %v\n", len(slice3), cap(slice3), slice3)
+
+	slice3 = append(slice3, 1)
+	fmt.Printf("size: %d, cap: %d, slice: %v\n", len(slice3), cap(slice3), slice3)
+
+	slice3 = append(slice3, 2)
+	fmt.Printf("size: %d, cap: %d, slice: %v\n", len(slice3), cap(slice3), slice3)
+
+	slice3 = append(slice3, 3)
+	fmt.Printf("size: %d, cap: %d, slice: %v\n", len(slice3), cap(slice3), slice3) // cap -> cap * 2
+
+	fmt.Println("--------------------------->")
+
+	slice4 := []int{1, 2, 3}
+	slice5 := slice4[0:2] // [0,2)
+	slice5 = slice4[:2]   // [0,2)
+	slice5 = slice4[1:]   // [1,...)
+	slice5 = slice4[:]    // 全部
+	slice4[0] = 100
+	fmt.Println(slice4)
+	fmt.Println(slice5) // s5和s4都会改变，他们指向的是同一数据
+
+	slice6 := make([]int, 3)
+	copy(slice6, slice5) // copy slice5指向的内存的数据，slice6指向新的地址空间
+	slice4[0] = 101
+	fmt.Println(slice6)
+}
+
+/*
+1. 多个defer的顺序是先进后出
+2. return的顺序早于defer
+return -> defer2 -> defer1
+*/
+func deferFunc() int {
+	defer fmt.Println("defer1")
+	defer fmt.Println("defer2")
+	return returnFunc()
+}
+
+func returnFunc() int {
+	fmt.Println("return called ...")
+	return 0
 }
 
 /*

@@ -44,15 +44,24 @@ func ShowAnimal(a Animal) {
 	fmt.Printf("animal type: %T, color: %s\n", a, a.GetColor())
 }
 
+func ShowAnimal2(a interface{}) {
+	if v, ok := a.(*Dog); ok { // 注意*Dog和Dog不是一种类型
+		fmt.Printf("type is Dog: %v\n", v)
+	} else {
+		fmt.Printf("type is not Dog\n")
+	}
+}
+
 func main() {
 	var d Animal = &Dog{Color{color: "red"}}
 	d.Sleep()
 	fmt.Printf("Dog color: %s\n", d.GetColor())
 	ShowAnimal(d)
-
+	ShowAnimal2(d)
 	var c Animal = &Cat{Color{color: "blue"}}
 	c.Sleep()
 	c.GetColor()
 	fmt.Printf("Cat color: %s\n", c.GetColor())
 	ShowAnimal(c)
+	ShowAnimal2(c)
 }

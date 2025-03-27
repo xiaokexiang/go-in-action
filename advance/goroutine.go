@@ -47,11 +47,18 @@ func multiGoroutine() {
 		}()
 		fmt.Println("goroutine A exec")
 	}() // 定义并调用
-	for { // main退出会导致子协程推出,和java相同
-		time.Sleep(1 * time.Second)
-	}
+}
+
+func multiGoroutine2(a int, b int) {
+	go func(a int, b int) {
+		fmt.Printf("a: %d, b: %d, a>b?: %t\n", a, b, a > b)
+	}(a, b)
 }
 
 func main() {
 	multiGoroutine()
+	multiGoroutine2(10, 20)
+	for { // main退出会导致子协程推出,和java相同
+		time.Sleep(1 * time.Second)
+	}
 }
